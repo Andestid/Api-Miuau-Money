@@ -130,8 +130,8 @@ router.post('/flujo', async (req, res) => {
       // Guardar los cambios en la base de datos
       await usuario.save();
        
-      usuario2.moneysobrante += ie;
-      usuario.moneytotal += ie;
+      usuario2.moneysobrante += egresos;
+      usuario.moneytotal += egresos;
         
       await usuario2.save()
   
