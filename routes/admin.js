@@ -132,8 +132,9 @@ router.post('/flujo', async (req, res) => {
       res.json({
         error: null,
         data: {
-          usuario_transfiere: usuario,
-          usuario_beneficiario: usuario2
+          usuario_transfiere: usuario.name,
+          usuario_beneficiario: usuario2.name,
+          mensaje: "Transferencia realizada"
         }
       });
     } catch (error) {
