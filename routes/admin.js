@@ -117,6 +117,9 @@ router.post('/flujo', async (req, res) => {
       if (!usuario || !usuario2) {
         throw new Error('Usuario no encontrado');
       }
+      if (usuario.moneysobrante < parseFloat(req.body.dinero_mov)){
+          throw new Error('Monto excedido');
+      }
   
       const ingresos = 0;
       const egresos = parseFloat(req.body.dinero_mov);
