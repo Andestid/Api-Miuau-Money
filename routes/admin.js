@@ -129,11 +129,18 @@ router.post('/flujo', async (req, res) => {
   
       // Guardar los cambios en la base de datos
       await usuario.save();
+       
+      usuario2.moneysobrante += ie;
+      usuario.moneytotal += ie;
+        
+      await usuario2.save()
   
       res.json({
         error: null,
         data: {
-          user: usuario
+          user_transfiere: usuario,
+          user_beneficiario: usuario2,
+          mensaje: "Transferencia exitosa"
         }
       });
     } catch (error) {
