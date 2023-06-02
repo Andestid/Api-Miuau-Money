@@ -11,11 +11,10 @@ router.get('/', (req, res) => {
             user: req.user
         }
     })
-})
+});
 
 router.post('/presupuesto', async (req, res) => {
     try {
-      console.log(req.user.name);
   
       // Obtener el usuario por su correo electrónico
       const usuario = await User.findOne({ email: req.body.email });
@@ -93,5 +92,20 @@ router.post('/presupuesto', async (req, res) => {
       res.status(500).json({ error: 'Error al generar el PDF' });
     }
   });
+
+router.get('/educacion', (req, res) => {
+    res.json({
+        error:null,
+        data: {
+            titulo: "Educacion Financiera",
+            user: {
+                Finanzas_Basicas: "http://cmas.siu.buap.mx/portal_pprd/work/sites/contaduria/templates/2/1/finanzas_para_que_son.pdf",
+                Matematicas_Basicas: "https://proyectodescartes.org/iCartesiLibri/materiales_didacticos/Matematicas_Basicas-JS/index.html",
+                Invierte_Aqui: "https://www.perlego.com/es/book/3012654/camino-hacia-la-libertad-financiera-la-trayectoria-de-una-latina-aprendiendo-a-manejar-su-dinero-correctamente-pdf"
+            }
+        }
+    })
+});
+
 
 module.exports = router;
