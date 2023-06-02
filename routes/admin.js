@@ -111,9 +111,10 @@ router.post('/flujo', async (req, res) => {
     try {
   
       // Obtener el usuario por su correo electrónico
-      const usuario = await User.findOne({ email: req.body.email });
+      const usuario = await User.findOne({ email: req.body.emailtransfer });
+      const usuario2 = await User.findOne({ email: req.body.emailbene });
   
-      if (!usuario) {
+      if (!usuario || !usuario2) {
         throw new Error('Usuario no encontrado');
       }
   
