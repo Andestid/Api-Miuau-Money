@@ -111,35 +111,33 @@ router.post('/flujo', async (req, res) => {
     try {
   
       // Obtener el usuario por su correo electrónico
-      const usuario = await User.findOne({ email_transfiere: req.body.email_transfiere });
-      const usuario2 = await User.findOne({ email_beneficiario: req.body.email_beneficiario });
+      const usuario = await User.findOne({ email: req.body.email });
   
-      if (!usuario || !usuario2) {
-        throw new Error('Usuarios no encontrados');
+      if (!usuario) {
+        throw new Error('Usuario no encontrado');
       }
   
+      const ingresos = 0;
+      const egresos = parseFloat(req.body.dinero_mov);
+      const ie = ingresos - egresos;
+  
       // Actualizar los valores del usuario
-      usuario.moneysobrante -= parseFloat(req.body.dinero_mov);
-      usuario.moneygasto += parseFloat(req.body.dinero_mov);
-        
-      usuario2.moneytotal += parseFloat(req.body.dinero_mov);
-      usuario2.moneysobrante += parseFloat(req.body.dinero_mov);
+      usuario.moneysobrante += ie;
+      usuario.moneygasto += egresos;
+      usuario.moneytotal += ingresos;
   
       // Guardar los cambios en la base de datos
       await usuario.save();
-      await usuario2.save();
   
       res.json({
         error: null,
         data: {
-          usuario_transfiere: usuario.name,
-          usuario_beneficiario: usuario2.name,
-          mensaje: "Transferencia realizada"
+          user: usuario
         }
       });
     } catch (error) {
       res.status(500).json({
-        error: 'Error al actualizar al hacer la transferencia',
+        error: 'Error al actualizar el presupuesto',
         message: error.message
       });
     }
